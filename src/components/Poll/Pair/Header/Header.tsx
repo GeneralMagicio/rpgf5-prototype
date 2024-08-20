@@ -7,6 +7,8 @@ import cn from 'classnames'
 import styles from './Header.module.scss'
 import { useRouter } from 'next/router'
 import Button from '@/components/Button'
+import { axiosInstance } from '@/utils/axiosInstance'
+import { useState } from 'react'
 
 interface HeaderProps {
   question: string
@@ -26,10 +28,20 @@ export const Header: React.FC<HeaderProps> = ({
   name,
 }) => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const cid = router.query.cid
   const progressPercentage = Math.max((voted / total) * 100, 4)
   const voteCountsToUnklock = minVotesToUnlock - voted
   const canFinish = voted >= minVotesToUnlock
+
+  const resetVotes = async () => {
+    setLoading(true);
+    await axiosInstance.post('/flow/reset', {
+      cid: Number(cid),
+    })
+    setLoading(false);
+    window.location.reload()
+  }
 
   return (
     <div
@@ -50,7 +62,19 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
       <p className="max-w-xl text-xl font-bold text-center">{question}</p>
       <div className="flex justify-end w-44">
-        <a href={`${cid}/ranking`} target="_blank" rel="noreferrer">
+        <Button
+          varient="primary"
+          size="large"
+          className={cn('group  disabled:text-gray-400 group-hover:flex')}
+          // disabled={!canFinish}
+          onClick={resetVotes}>
+          {loading ? "Resetting..." : 'Reset'}
+        </Button>
+        <a
+          href={`${cid}/ranking`}
+          target="_blank"
+          rel="noreferrer"
+          className="ml-8">
           <Button
             varient="primary"
             size="large"
