@@ -23,9 +23,7 @@ import { axiosInstance } from '@/utils/axiosInstance'
 import { AttestationModal } from '@/components/Poll/Rankings/OverallRankingRow/AttestationModal'
 import { PairType } from '@/types/Pairs/Pair'
 
-export default function RankingPage({
-  isMoon,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function RankingPage() {
   const [rankings, setRankings] = useState<EditingCollectionRanking>()
   const [tempRankings, setTempRankings] = useState<EditingCollectionRanking>()
   const [collection, setCollection] = useState<PairType>()
@@ -33,6 +31,7 @@ export default function RankingPage({
   const [open, setOpen] = useState(false)
   const [error, setError] = useState(false)
   const router = useRouter()
+  const isMoon = true
   // const type = router.query.type
 
   const handleBack = () => {
@@ -137,19 +136,19 @@ export default function RankingPage({
   )
 }
 
-export const getServerSideProps = (async (context) => {
-  const cid = context.params?.cid
+// export const getServerSideProps = (async (context) => {
+//   const cid = context.params?.cid
 
-  if (!cid) return { props: { isMoon: false } }
+//   if (!cid) return { props: { isMoon: false } }
 
-  const res = await axiosInstance.get<boolean>('/flow/isMoon', {
-    params: {
-      cid,
-    },
-  })
+//   const res = await axiosInstance.get<boolean>('/flow/isMoon', {
+//     params: {
+//       cid,
+//     },
+//   })
 
-  const isMoon = false
-  return { props: { isMoon } }
-}) satisfies GetServerSideProps<{
-  isMoon: boolean
-}>
+//   const isMoon = false
+//   return { props: { isMoon } }
+// }) satisfies GetServerSideProps<{
+//   isMoon: boolean
+// }>

@@ -58,7 +58,7 @@ export default function Poll() {
     }
   }, [pairs])
 
-  const onVote = async (pair: PairType[], picked?: number | undefined) => {
+  const onVote = async (pair: PairType[], star1: number | null, star2: number | null, picked?: number | undefined) => {
     if (!pairs) return
 
     const [a, b] = pair
@@ -66,6 +66,8 @@ export default function Poll() {
       id1: a.id,
       id2: b.id,
       pickedId: picked || null,
+      star1,
+      star2,
     })
 
     await fetchData()
@@ -74,10 +76,9 @@ export default function Poll() {
   return (
     <>
       <Header
-        handleFinishVoting={() => setIsConfirmOpen(true)}
         name={pairs?.name || ''}
         question={activeQuestion}
-        total={voted < Math.ceil(total / 2) ? Math.ceil(total / 2) : total}
+        total={total}
         voted={voted}
         minVotesToUnlock={Math.ceil(total * threshold)}
       />

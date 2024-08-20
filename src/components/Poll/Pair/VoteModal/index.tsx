@@ -15,25 +15,27 @@ interface VoteModalProps {
 export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
   const [metadata, setMetadata] = useState<PairTypeMetaData | null>(null)
 
-  useEffect(() => {
-    axiosInstance
-      .get<PairTypeMetaData>(item.metadataUrl)
-      .then((res) => setMetadata(res.data))
-  }, [item])
+  // const {impactDescription, contributionDescription} = item
+
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get<PairTypeMetaData>(item.metadataUrl)
+  //     .then((res) => setMetadata(res.data))
+  // }, [item])
 
   return (
     <>
       <div className="relative flex  min-w-[700px] flex-col  gap-6">
         <div className="flex flex-col">
-          <header className="mb-2 flex justify-between">
+          <header className="flex justify-between mb-2">
             <h3 className="text-2xl font-bold ">{item.name}</h3>
             <Close className="cursor-pointer" onClick={handeClose} />
           </header>
           {item.numOfChildren > 0 && (
-            <div className="self-start rounded-lg border border-black-3 p-1">
-              <div className="flex items-center gap-2 rounded-lg border border-gray-10 px-3 py-1">
+            <div className="self-start p-1 border rounded-lg border-black-3">
+              <div className="flex items-center gap-2 px-3 py-1 border rounded-lg border-gray-10">
                 <Layers />
-                <span className="font-IBM text-sm">
+                <span className="text-sm font-IBM">
                   {`${item.numOfChildren} + Projects`}
                 </span>
               </div>
@@ -48,6 +50,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
                 className="w-full shrink-0 rounded-2xl"
                 height={360}
                 src={item.image || '/nip.png'}
+                unoptimized={true}
                 width={360}
               />
               <div className="max-w-[360px] overflow-hidden text-ellipsis whitespace-nowrap ">
@@ -61,7 +64,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
                 </a>
               </div>
             </div>
-            <div className="flex flex-col gap-6 overflow-auto px-4 font-Inter text-lg">
+            <div className="flex flex-col gap-6 px-4 overflow-auto text-lg font-Inter">
               <div className="flex flex-col gap-2">
                 <p
                   dangerouslySetInnerHTML={{
@@ -88,7 +91,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
               <div className="flex flex-col gap-2">
                 <b>Contribution Links:</b>
                 {Boolean(metadata?.contributionLinks?.length) ? (
-                  <ul className="list-disc pl-8">
+                  <ul className="pl-8 list-disc">
                     {metadata?.contributionLinks.map((cLink) => (
                       <li key={cLink.url}>
                         <a
@@ -103,7 +106,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
                     ))}
                   </ul>
                 ) : (
-                  <ul className="list-disc pl-8">
+                  <ul className="pl-8 list-disc">
                     <li>No contribution links</li>
                   </ul>
                 )}
@@ -111,7 +114,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
               <div className="flex flex-col gap-2">
                 <b>Impact Metrics:</b>
                 {Boolean(metadata?.impactMetrics?.length) ? (
-                  <ul className="list-disc pl-8">
+                  <ul className="pl-8 list-disc">
                     {metadata?.impactMetrics.map((metric) => (
                       <li key={metric.url}>
                         <a
@@ -126,7 +129,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
                     ))}
                   </ul>
                 ) : (
-                  <ul className="list-disc pl-8">
+                  <ul className="pl-8 list-disc">
                     <li>No impact metrics</li>
                   </ul>
                 )}
@@ -134,7 +137,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
               <div className="flex flex-col gap-2">
                 <b>Funding Sources:</b>
                 {Boolean(metadata?.fundingSources?.length) ? (
-                  <ul className="list-disc pl-8">
+                  <ul className="pl-8 list-disc">
                     {metadata?.fundingSources.map((fund) => (
                       <li key={fund.type}>
                         {fund.type}, {fund.amount} {fund.currency}
@@ -143,7 +146,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
                     ))}
                   </ul>
                 ) : (
-                  <ul className="list-disc pl-8">
+                  <ul className="pl-8 list-disc">
                     <li>No funding sources</li>
                   </ul>
                 )}
@@ -152,15 +155,15 @@ export const VoteModal: React.FC<VoteModalProps> = ({ handeClose, item }) => {
           </div>
           {!item.childProjects?.length ? null : (
             <div className="mt-6 mb-10 ">
-              <h5 className="border-b border-b-gray-10 pb-2 text-lg">
+              <h5 className="pb-2 text-lg border-b border-b-gray-10">
                 {item.childProjects.length} projects
               </h5>
-              <div className="mt-4 flex w-full flex-wrap gap-7">
+              <div className="flex flex-wrap w-full mt-4 gap-7">
                 {item.childProjects.map((child) => (
                   <div className="flex w-1/4 gap-4" key={child.id}>
                     <Image
                       alt={item.name}
-                      className="h-12 w-12 shrink-0 rounded"
+                      className="w-12 h-12 rounded shrink-0"
                       height={48}
                       src={child.image}
                       width={48}

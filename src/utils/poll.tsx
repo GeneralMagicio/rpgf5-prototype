@@ -18,9 +18,13 @@ export async function voteProjects({
   id1,
   id2,
   pickedId,
+  star1,
+  star2
 }: {
   id1: number
   id2: number
+  star1: number | null
+  star2: number | null
   pickedId: number | null
 }) {
   return axiosInstance
@@ -28,6 +32,8 @@ export async function voteProjects({
       project1Id: id1,
       project2Id: id2,
       pickedId,
+      project1Stars: star1,
+      project2Stars: star2,
     })
     .then((res) => res.data)
 }

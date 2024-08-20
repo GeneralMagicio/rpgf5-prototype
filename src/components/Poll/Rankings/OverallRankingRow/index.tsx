@@ -33,9 +33,12 @@ export const OverallRankingRow: React.FC<RankingProps> = ({
   return (
     <div
       className={`mb-2 flex cursor-pointer items-center gap-6 rounded-lg bg-white/[.4] px-6 py-3 text-black`}>
-      <span className="grow">{data.name}</span>
+      <span className="grow">
+        {`${data.name} - ${data.star}`}
+        <span className="text-2xl">&#9733;</span>
+      </span>
 
-      <span className="flex w-48 items-center justify-end">
+      <span className="flex items-center justify-end w-48">
         {!editMode ? (
           <>
             <span className="">{formatRankingValue(data.share)}</span>
@@ -56,7 +59,7 @@ export const OverallRankingRow: React.FC<RankingProps> = ({
         )}
       </span>
 
-      <span className="flex w-20 items-center justify-end">
+      <span className="flex items-center justify-end w-20">
         <div className="flex h-[24px] items-center">
           <span className="">
             {(data.share * 100).toLocaleString(undefined, {
@@ -67,7 +70,7 @@ export const OverallRankingRow: React.FC<RankingProps> = ({
           <span className="ml-1 text-[8px] text-red">%</span>
         </div>
       </span>
-      <span className="flex w-8 justify-end">
+      <span className="flex justify-end w-8">
         <ProjectContextMenu project={data.id} />
       </span>
     </div>
@@ -100,21 +103,21 @@ export const OverallRankingHeader: React.FC<HeaderProps> = ({
   const [isEditManualModalOpen, setIsEditManualModalOpen] = useState(false)
 
   return (
-    <div className="mb-2 flex w-full flex-col items-end text-black last:mb-0">
+    <div className="flex flex-col items-end w-full mb-2 text-black last:mb-0">
       <div
         className={`flex w-full items-center gap-6 rounded-lg bg-white/[.9] px-6 py-3`}>
         <span
           {...getToggleProps({
             onClick: () => setExpanded((prevExpanded) => !prevExpanded),
           })}
-          className="flex h-6 w-12 items-center justify-center">
+          className="flex items-center justify-center w-12 h-6">
           {isExpanded ? <CaretUp /> : <CaretDown />}
         </span>
         <span className="grow">{data.name}</span>
-        <span className="flex w-36 items-center justify-end">
+        <span className="flex items-center justify-end w-36">
           <HeaderLabels pairs={pairs} progress={collection?.progress} />
         </span>
-        <span className="flex w-48 items-center justify-end">
+        <span className="flex items-center justify-end w-48">
           {!editMode ? (
             <>
               <span className="">{formatRankingValue(data.share)}</span>
@@ -133,7 +136,7 @@ export const OverallRankingHeader: React.FC<HeaderProps> = ({
             />
           )}
         </span>{' '}
-        <span className="flex w-20 items-center justify-end">
+        <span className="flex items-center justify-end w-20">
           <div className="flex h-[24px] items-center">
             <span className="">
               {(data.share * 100).toLocaleString(undefined, {
@@ -144,7 +147,7 @@ export const OverallRankingHeader: React.FC<HeaderProps> = ({
             <span className="ml-1 text-[8px] text-red">%</span>
           </div>
         </span>
-        <span className="flex w-8 items-center justify-end">
+        <span className="flex items-center justify-end w-8">
           {level === 2 && collection && (
             <CategoryContextMenu
               collection={collection}

@@ -4,6 +4,7 @@ export interface PairType {
   id: number
   name: string
   url: string
+  rating:  number | null
   image: string
   impactDescription: string
   contributionDescription?: string

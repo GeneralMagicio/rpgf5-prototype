@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import '@smastrom/react-rating/style.css'
 
 import { useEffect, useLayoutEffect, useState } from 'react'
 
@@ -77,8 +78,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (smallscreen) {
     return (
-      <div className="main-layout flex min-h-screen shrink-0 flex-col items-center justify-center bg-cover bg-no-repeat font-IBM text-black">
-        <div className="flex w-96 flex-col gap-3 p-10 text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen text-black bg-no-repeat bg-cover main-layout shrink-0 font-IBM">
+        <div className="flex flex-col gap-3 p-10 text-center w-96">
           <div className="text-xl font-bold">Large screens only</div>
           Pairwise is not currently available on mobile and tablet devices.
           Please visit on a desktop or laptop computer.

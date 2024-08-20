@@ -9,7 +9,7 @@ import { VoteModal } from './VoteModal'
 import { useRouter } from 'next/router'
 
 interface PairProps {
-  onVote: (pair: PairType | null, voted: VOTES) => void
+  onVote: (pair: PairType | null, star1: number | null, star2: number | null, voted: VOTES) => void
   // hidden?: boolean
   voted: VOTES
   pair: PairType[]
@@ -20,6 +20,28 @@ export const Pair: React.FC<PairProps> = ({ onVote, voted, pair }) => {
   const [a, b] = pair
   const [hoverdItem, setHoverdItem] = useState<VOTES>(VOTES.NONE)
   const [selectedItem, setSelectedItem] = useState<PairType | null>(null)
+
+  const [ratingA, setRatingA] = useState(a.rating);
+  const [ratingB, setRatingB] = useState(b.rating);
+
+
+  useEffect(() => {
+    setRatingA(a.rating)
+  }, [a])
+
+  useEffect(() => {
+    setRatingB(b.rating)
+  }, [b])
+
+  const handleRatingForA = (newRating: PairType['rating']) => {
+    setRatingA(newRating);
+  }
+
+  const handleRatingForB = (newRating: PairType['rating']) => {
+
+    console.log("nr:", newRating)
+    setRatingB(newRating);
+  }
 
   useEffect(() => {
     setSelectedItem(null)
@@ -33,8 +55,10 @@ export const Pair: React.FC<PairProps> = ({ onVote, voted, pair }) => {
       )}>
       <VoteCard
         item={a}
+        rating={ratingA}
+        onRatingChange={handleRatingForA}
         key={a.id}
-        onClick={() => onVote(a, VOTES.LEFT)}
+        onClick={() => onVote(a, ratingA, ratingB, VOTES.LEFT)}
         onMouseEnter={() => setHoverdItem(VOTES.LEFT)}
         onMouseLeave={() => setHoverdItem(VOTES.NONE)}
         onQuickView={() => setSelectedItem(a)}
@@ -49,15 +73,17 @@ export const Pair: React.FC<PairProps> = ({ onVote, voted, pair }) => {
         }
       />
       <Abstain
-        onClick={() => onVote(null, VOTES.NONE)}
+        onClick={() => onVote(null, ratingA, ratingB, VOTES.NONE)}
         onMouseEnter={() => setHoverdItem(VOTES.ABSTAIN)}
         onMouseLeave={() => setHoverdItem(VOTES.NONE)}
         selected={voted === VOTES.ABSTAIN}
       />
       <VoteCard
         item={b}
+        rating={ratingB}
+        onRatingChange={handleRatingForB}
         key={b.id}
-        onClick={() => onVote(b, VOTES.RIGHT)}
+        onClick={() => onVote(b, ratingA, ratingB, VOTES.RIGHT)}
         onMouseEnter={() => setHoverdItem(VOTES.RIGHT)}
         onMouseLeave={() => setHoverdItem(VOTES.NONE)}
         onQuickView={() => setSelectedItem(b)}

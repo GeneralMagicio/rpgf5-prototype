@@ -55,64 +55,6 @@ export const RankingPageHeader: React.FC<Props> = ({
           )}
         </Button>
       </div>
-      <h4 className="text-2xl font-bold font-IBM">
-        {editMode
-          ? 'Editing…'
-          : isOverallRanking
-          ? 'Ranking'
-          : 'Adjust Project Percentages'}
-      </h4>
-      <div className="flex justify-end w-64">
-        <div className="flex items-center gap-2">
-          {editMode ? (
-            <Button
-              className={error ? 'opacity-50' : ''}
-              varient="primary"
-              size="large"
-              onClick={onUpdate}>
-              Save
-              <Tick color="currentColor" />
-            </Button>
-          ) : (
-            <>
-              {exportStatus === "download" ? (
-                <a href={`https://giveth.mypinata.cloud/ipfs/${exportHash}`} download="proposed_file_name">
-                  <Button varient="primary" size="large">
-                    Download
-                    <Excel />
-                  </Button>
-                </a>
-              ) : (
-                <Button varient="primary" size="large" onClick={exportExcel}>
-                  {exportStatus === "initial" ? 'Export' : 'Loading...'}
-                  <Excel />
-                </Button>
-              )}
-              <Button varient="primary" size="large" onClick={onEdit}>
-                Edit
-                <Shuffle />
-              </Button>
-            </>
-          )}
-          {onDone ? (
-            <Button
-              varient="primary"
-              theme="black"
-              size="large"
-              onClick={onDone}>
-              Done
-            </Button>
-          ) : onAttest ? (
-            <Button
-              varient="primary"
-              theme="black"
-              size="large"
-              onClick={onAttest}>
-              Attest
-            </Button>
-          ) : null}
-        </div>
-      </div>
     </header>
   )
 }

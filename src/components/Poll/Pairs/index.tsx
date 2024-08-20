@@ -6,7 +6,7 @@ import { Pair } from '../Pair'
 
 interface PairsProps {
   pairs: PairsType['pairs']
-  onVote: (pair: PairType[], picked?: number) => void
+  onVote: (pair: PairType[], star1: number | null, star2: number | null, picked?: number) => void
   activeIndex: number
 }
 export const Pairs: React.FC<PairsProps> = ({
@@ -23,16 +23,16 @@ export const Pairs: React.FC<PairsProps> = ({
 
   return (
     <div className="container relative mx-auto  flex min-w-[900px]  overflow-hidden px-16">
-      <div className="absolute inset-0 mx-auto -mt-8  flex justify-center overflow-hidden text-black">
+      <div className="absolute inset-0 flex justify-center mx-auto -mt-8 overflow-hidden text-black">
         <Grid />
       </div>
       <div
-        className="flex w-full shrink-0 gap-7  transition-transform duration-500">
+        className="flex w-full transition-transform duration-500 shrink-0 gap-7">
         <Pair
-          onVote={(item, newVoted) => {
+          onVote={(item, star1, star2, newVoted) => {
             if (voted === VOTES.NONE) {
               setVoted(newVoted)
-              onVote(pairs[0], item?.id)
+              onVote(pairs[0], star1, star2, item?.id)
             }
           }}
           pair={pairs[0]}

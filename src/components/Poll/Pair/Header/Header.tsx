@@ -10,23 +10,23 @@ import Button from '@/components/Button'
 
 interface HeaderProps {
   question: string
-  handleFinishVoting: () => void
+  // handleFinishVoting: () => void
   total: number
   name: string
   voted: number
   minVotesToUnlock: number
 }
 
-
 export const Header: React.FC<HeaderProps> = ({
   question,
-  handleFinishVoting,
+  // handleFinishVoting,
   total,
   voted,
   minVotesToUnlock,
   name,
 }) => {
   const router = useRouter()
+  const cid = router.query.cid
   const progressPercentage = Math.max((voted / total) * 100, 4)
   const voteCountsToUnklock = minVotesToUnlock - voted
   const canFinish = voted >= minVotesToUnlock
@@ -50,40 +50,17 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
       <p className="max-w-xl text-xl font-bold text-center">{question}</p>
       <div className="flex justify-end w-44">
-        <Button
-          varient="primary"
-          size="large"
-          className={cn('group  disabled:text-gray-400 group-hover:flex')}
-          disabled={!canFinish}
-          onClick={handleFinishVoting}>
-          Continue
-          <span className="relative">
-            {canFinish ? (
-              <ArrowForward />
-            ) : (
-              <>
-                <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red text-center font-IBM text-[8px] text-white">
-                  {voteCountsToUnklock}
-                </span>
-                <Lock />
-              </>
-            )}
-          </span>
-          {!canFinish && (
-            <div className="absolute -bottom-[230%] left-0 top-16 hidden w-[350px] -translate-x-1/2 whitespace-pre-wrap rounded-2xl bg-gray-90 p-2 text-[14px]  leading-6 text-black backdrop-blur-sm group-hover:block">
-              To wrap up your <span className="font-bold">{`${name} `}</span>
-              ranking, you need to make at least{' '}
-              <span className="font-bold">{minVotesToUnlock}</span> Pairwise
-              votes.
-            </div>
-          )}
-          {voteCountsToUnklock === 0 && (
-            <div className="absolute -bottom-[230%] left-0 top-16 w-[350px] -translate-x-1/2 whitespace-pre-wrap rounded-2xl bg-gray-90 p-2 text-[14px]  leading-6 text-black backdrop-blur-sm">
-              This collection is now unlocked to create a list! You can also
-              continue to improve the ranking.
-            </div>
-          )}
-        </Button>
+        <a href={`${cid}/ranking`} target="_blank" rel="noreferrer">
+          <Button
+            varient="primary"
+            size="large"
+            className={cn('group  disabled:text-gray-400 group-hover:flex')}
+            // disabled={!canFinish}
+            // onClick={handleFinishVoting}
+          >
+            Ranking
+          </Button>
+        </a>
       </div>
       <div className="absolute inset-x-0 bottom-0 h-1 bg-white"></div>
       <div
@@ -97,8 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
         style={{
           left: `${Math.min(progressPercentage, 96)}%`,
         }}>
-        <span className="text-red">{voted}</span> of{' '}
-        {total}
+        <span className="text-red">{voted}</span> of {total}
         <div className="absolute inset-x-0 top-0 w-0 h-0 mx-auto -translate-y-full border-b-8 border-x-8 border-x-transparent border-b-white"></div>
       </div>
     </div>

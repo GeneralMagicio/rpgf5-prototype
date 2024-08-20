@@ -18,6 +18,7 @@ export interface ProjectRanking {
   type: 'project' | 'collection' | 'composite project'
   hasRanking: false
   id: number
+  star: number
   RPGF3Id: string
   share: number
   name: string

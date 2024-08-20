@@ -58,9 +58,11 @@ export const login = async (
     ...{ message, signature },
   })
 
-  window.localStorage.setItem('auth', verifyRes.data)
+  const {token} = verifyRes.data
+
+  window.localStorage.setItem('auth', token)
   window.localStorage.setItem('loggedInAddress', address)
-  axiosInstance.defaults.headers.common['auth'] = verifyRes.data
+  axiosInstance.defaults.headers.common['auth'] = token
   return verifyRes
 }
 

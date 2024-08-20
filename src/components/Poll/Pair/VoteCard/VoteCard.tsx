@@ -7,6 +7,7 @@ import { PairType } from '@/types/Pairs/Pair'
 import { CardBorderLeft } from '@/components/Icon/CardBorderLeft'
 import { CardBorderRight } from '@/components/Icon/CardBorderRight'
 import Image from 'next/image'
+import { Rating, Star } from '@smastrom/react-rating'
 
 interface VoteCardProps {
   placement: 'left' | 'right'
@@ -14,6 +15,8 @@ interface VoteCardProps {
   item: PairType
   selected?: boolean
   onQuickView: () => void
+  rating: PairType['rating']
+  onRatingChange: (rating: number) => void
 }
 
 const isSingleProject = (item: PairType) => {
@@ -33,11 +36,15 @@ export const VoteCard: React.FC<
   selected,
   onClick,
   onQuickView,
+  rating,
+  onRatingChange,
   ...props
 }) => {
   const isRight = placement === 'right'
   const isLeft = placement === 'left'
   const isSkew = varient === 'skew'
+
+  // console.log("image link:", )
 
   return (
     <div className={cn(styles.voteCardWrapper, 'flex flex-col')} {...props}>
@@ -122,16 +129,29 @@ export const VoteCard: React.FC<
             })`,
           }}>
           <div
-            className="flex h-full grow select-none flex-col gap-2"
+            className="flex flex-col h-full gap-2 select-none grow"
             onClick={onClick}>
             <Image
               alt={item.name}
               className="h-[170px] w-full rounded-2xl border-0 object-cover pb-2"
               height="300"
               src={item.image || '/nip.png'}
+              unoptimized={true}
+              // src={'/nip.png'}
               width="300"
             />
             <div className="text-2xl font-bold">{item.name}</div>
+            <Rating
+              style={{ maxWidth: 100 }}
+              value={rating || 3}
+              onChange={onRatingChange}
+              isRequired={true}
+              itemStyles={{
+                itemShapes: Star,
+                activeFillColor: rating === null ? '#454545' : "#ffe100",
+                inactiveFillColor: "#aaa"
+              }}
+            />
             <div className={cn(styles['line-clamp-4'])}>
               {item.contributionDescription}
             </div>
@@ -157,9 +177,9 @@ export const VoteCard: React.FC<
           </div>
         </div>
       </div>
-      <div className="flex w-full justify-center pt-5">
+      <div className="flex justify-center w-full pt-5">
         <button
-          className="mt-10 flex w-max gap-4 rounded-2xl bg-white px-4 py-3 text-black opacity-0 transition-opacity"
+          className="flex gap-4 px-4 py-3 mt-10 text-black transition-opacity bg-white opacity-0 w-max rounded-2xl"
           onClick={onQuickView}>
           <span>Details</span>
           <Eye />
