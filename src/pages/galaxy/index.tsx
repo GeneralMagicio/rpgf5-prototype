@@ -5,7 +5,7 @@ import { CollectionPlanet } from '@/components/Galaxy/CollectionPlanet'
 import { ColoredGrid } from '@/components/Icon/ColoredGrid'
 import { HappySun } from '@/components/Icon/HappySun'
 import { Help } from '@/components/Icon/Help'
-import { HelpModal } from '@/components/Journey/HelpModal'
+// import { HelpModal } from '@/components/Journey/HelpModal'
 import { LoadingSpinner } from '../../components/Loading/LoadingSpinner'
 import { PairType } from '@/types/Pairs/Pair'
 import { PodiumSharp } from '@/components/Icon/PodiumSharp'
@@ -117,7 +117,7 @@ export default function Galaxy() {
   if (collections.length === 0) {
     return (
       <div
-        className="flex w-full items-center justify-center"
+        className="flex items-center justify-center w-full"
         style={{ height: 'calc(100vh - 60px)' }}>
         <LoadingSpinner />
       </div>
@@ -134,7 +134,7 @@ export default function Galaxy() {
           }}
         />
       )} */}
-      {(showHelpModal || router.query.welcome) && (
+      {/* {(showHelpModal || router.query.welcome) && (
         <HelpModal
           isOpen={true}
           onClose={() => {
@@ -142,9 +142,9 @@ export default function Galaxy() {
             if (router.query.welcome) router.replace('', { query: {} })
           }}
         />
-      )}
+      )} */}
 
-      <ColoredGrid className="absolute max-h-screen-content w-full text-white" />
+      <ColoredGrid className="absolute w-full text-white max-h-screen-content" />
       <TransformWrapper
         centerOnInit
         initialScale={2.5}
@@ -156,16 +156,16 @@ export default function Galaxy() {
         }}>
         <TransformComponent>
           <div
-            className="flex w-screen items-center justify-center overflow-hidden p-10"
+            className="flex items-center justify-center w-screen p-10 overflow-hidden"
             style={{ height: 'calc(100vh - 60px - 120px)' }}>
             <div
-              className="relative flex shrink-0 items-center justify-center"
+              className="relative flex items-center justify-center shrink-0"
               style={{
                 width: '200vw',
                 height: '200vh',
                 transform: 'scale(.3)',
               }}>
-              <div className="relative flex h-screen w-screen items-center justify-center ">
+              <div className="relative flex items-center justify-center w-screen h-screen ">
                 {cords.length &&
                   collections.map((collection, idx) => {
                     const { x, y } = cords[idx]
