@@ -25,11 +25,12 @@ export default function Poll() {
   const { isConnected } = useAccount()
 
   const total = pairs?.totalPairs ?? 1
+  const progress = pairs?.progress ?? 0
   const voted = pairs?.votedPairs ?? 0
   const threshold = pairs?.threshold ?? 1
 
   const goToRanking = () => {
-    router.push(`/ranking?c=${cid}`)
+    router.push(`/poll/${cid}/ranking`)
   }
 
   const fetchData = async () => {
@@ -76,11 +77,12 @@ export default function Poll() {
   return (
     <>
       <Header
-        name={pairs?.name || ''}
+        // name={pairs?.name || ''}
+        progress={progress}
         question={activeQuestion}
-        total={total}
-        voted={voted}
-        minVotesToUnlock={Math.ceil(total * threshold)}
+        // total={total}
+        // voted={voted}
+        // minVotesToUnlock={Math.ceil(total * threshold)}
       />
 
       {pairs?.pairs && (

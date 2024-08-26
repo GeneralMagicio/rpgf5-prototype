@@ -3,6 +3,7 @@ import { PairType } from './Pair'
 export interface PairsType {
   pairs: Array<Array<PairType>>
   totalPairs: number
+  progress: number
   votedPairs: number
   type: 'expertise'
   threshold: number

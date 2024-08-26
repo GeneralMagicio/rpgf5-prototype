@@ -6,6 +6,9 @@ import Button from '@/components/Button'
 import { Excel } from '@/components/Icon/Excel'
 import { useState } from 'react'
 import { axiosInstance } from '@/utils/axiosInstance'
+import cn from 'classnames'
+import { useRouter } from 'next/router'
+
 
 interface Props {
   onAttest?: () => void
@@ -31,6 +34,21 @@ export const RankingPageHeader: React.FC<Props> = ({
   const [exportStatus, setExportStatus] = useState<"initial" | "loading" | "download">("initial")
   const [exportHash, setExportHash] = useState<string>()
 
+  const router = useRouter()
+
+  const cid = router.query.cid
+
+  const [loading, setLoading] = useState(false)
+
+  const resetVotes = async () => {
+    // setLoading(true);
+    // await axiosInstance.post('/flow/reset', {
+    //   cid: Number(cid),
+    // })
+    // setLoading(false);
+    window.location.href = `/poll/${cid}`
+  }
+
   const exportExcel = async () => {
     setExportStatus("loading")
     const res = await axiosInstance.get<string>('/flow/ranking/overall/excel')
@@ -53,6 +71,14 @@ export const RankingPageHeader: React.FC<Props> = ({
               <Close className="scale-[70%]" />
             </>
           )}
+        </Button>
+        <Button
+          varient="primary"
+          size="large"
+          className={cn('group  disabled:text-gray-400 group-hover:flex')}
+          // disabled={!canFinish}
+          onClick={resetVotes}>
+          {loading ? "Resetting..." : 'Reset'}
         </Button>
       </div>
     </header>

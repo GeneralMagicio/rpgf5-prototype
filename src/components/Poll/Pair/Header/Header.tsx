@@ -13,26 +13,28 @@ import { useState } from 'react'
 interface HeaderProps {
   question: string
   // handleFinishVoting: () => void
-  total: number
-  name: string
-  voted: number
-  minVotesToUnlock: number
+  // total: number
+  progress: number
+  // name: string
+  // voted: number
+  // minVotesToUnlock: number
 }
 
 export const Header: React.FC<HeaderProps> = ({
   question,
+  progress,
   // handleFinishVoting,
-  total,
-  voted,
-  minVotesToUnlock,
-  name,
+  // total,
+  // voted,
+  // minVotesToUnlock,
+  // name,
 }) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const cid = router.query.cid
-  const progressPercentage = Math.max((voted / total) * 100, 4)
-  const voteCountsToUnklock = minVotesToUnlock - voted
-  const canFinish = voted >= minVotesToUnlock
+  const progressPercentage = Math.max(progress * 100, 0.5)
+  // const voteCountsToUnklock = minVotesToUnlock - voted
+  // const canFinish = voted >= minVotesToUnlock
 
   const resetVotes = async () => {
     setLoading(true);
@@ -96,9 +98,9 @@ export const Header: React.FC<HeaderProps> = ({
       <div
         className="absolute top-[90%] min-w-max -translate-x-1/2 translate-y-full rounded-2xl bg-white px-3 py-1 text-xs transition-all"
         style={{
-          left: `${Math.min(progressPercentage, 96)}%`,
+          left: `${Math.min(progressPercentage, 99.5)}%`,
         }}>
-        <span className="text-red">{voted}</span> of {total}
+        {/* <span className="text-red">{voted}</span> of {total} */}
         <div className="absolute inset-x-0 top-0 w-0 h-0 mx-auto -translate-y-full border-b-8 border-x-8 border-x-transparent border-b-white"></div>
       </div>
     </div>
